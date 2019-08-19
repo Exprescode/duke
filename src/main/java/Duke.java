@@ -3,8 +3,10 @@ import java.util.Scanner;
 
 public class Duke {
     private static final String BAR = "\t____________________________________________________________";
+
     /**
      * Program starts here. This is the main method.
+     *
      * @param args cmd line input arguments.
      */
     public static void main(String[] args) {
@@ -17,18 +19,34 @@ public class Duke {
         Scanner scan = new Scanner(System.in);
         print_init_msg();
         String user_input = scan.nextLine();
-        ArrayList<String> user_inputs = new ArrayList<String>();
-        while(!user_input.equals("bye")){
-            if(user_input.equals("list")){
+        ArrayList<Task> tasks = new ArrayList<>();
+        while (!user_input.equals("bye")) {
+            if (user_input.equals("list")) {
                 StringBuilder sb = new StringBuilder();
-                for(int i = 0; i < user_inputs.size(); ++i){
-                    sb.append(i + 1).append(". ").append(user_inputs.get(i)).append("\n");
+                for (int i = 0; i < tasks.size(); ++i) {
+                    Task curr_task = tasks.get(i);
+                    sb.append((i + 1) + ".");                                           //Append entry number.
+                    sb.append("[" + (curr_task.getStatus() ? "✓" : "✗") + "] ");   //Append task status
+                    sb.append(curr_task.getName());                                      //Append task name
+                    sb.append("\n");                                                    //Append newline
                 }
-                sb.deleteCharAt(sb.length()-1);
+                sb.deleteCharAt(sb.length() - 1); //Remove extra newline.
                 print_console(sb.toString());
             } else {
-                user_inputs.add(user_input);
-                print_console("added: " + user_input);
+                String[] user_input_parts = user_input.split(" ", 2);
+                if (user_input_parts[0].equals("done")) {
+                    int cmd_arg = str_to_int(user_input_parts[1]);
+                    if (cmd_arg > 0 && cmd_arg <= tasks.size()) {
+                        Task curr_task = tasks.get(cmd_arg - 1);
+                        curr_task.setDone();
+                        print_console("Nice! I've marked this task as done:\n  [✓] " + curr_task.getName());
+                    } else {
+                        print_console("Invalid option!");
+                    }
+                } else {
+                    tasks.add(new Task(user_input));
+                    print_console("added: " + user_input);
+                }
             }
             user_input = scan.nextLine();
         }
@@ -45,5 +63,14 @@ public class Duke {
 
     private static void print_exit_msg() {
         print_console("Bye. Hope to see you again soon!");
+    }
+
+    private static int str_to_int(String str_int) {
+        try {
+            return Integer.parseInt(str_int);
+        } catch (Exception e) {
+            //Ignore error.
+        }
+        return 0;
     }
 }
