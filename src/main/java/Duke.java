@@ -23,6 +23,7 @@ public class Duke {
         while (!user_input.equals("bye")) {
             if (user_input.equals("list")) {
                 StringBuilder sb = new StringBuilder();
+                sb.append("Here are the tasks in your list:\n");
                 for (int i = 0; i < tasks.size(); ++i) {
                     Task curr_task = tasks.get(i);
                     sb.append((i + 1) + ".");                                           //Append entry number.
