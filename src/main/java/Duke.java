@@ -88,6 +88,9 @@ public class Duke extends Application {
         Scene scene = new Scene(helloWorld); //Setting the scene to be our label.
         stage.setScene(scene); //Settings the stage to show our screen.
         stage.show(); //Render the stage.
+        Stage stage2 = new Stage();
+        stage2.setScene(scene);
+        stage2.show();
     }
 }
 
@@ -110,5 +113,6 @@ public class Duke extends Application {
  * 3.   You’ve learnt that a Stage can be thought of as a window.
  *
  *      i.  Can you have more than one Stage an application?
+ *          yes
  *      ii. Try creating another stage and showing it! What happens?
  */
