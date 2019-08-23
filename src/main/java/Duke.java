@@ -1,7 +1,13 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Duke {
+public class Duke extends Application {
     private static final String BAR = "\t____________________________________________________________";
 
     /**
@@ -74,4 +80,35 @@ public class Duke {
         }
         return 0;
     }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Label helloWorld = new Label("Hello World!"); //Creating a new Label control.
+        helloWorld.setFont(new Font("Arial", 50));
+        Scene scene = new Scene(helloWorld); //Setting the scene to be our label.
+        stage.setScene(scene); //Settings the stage to show our screen.
+        stage.show(); //Render the stage.
+    }
 }
+
+/**
+ * Exercises
+ * 1.   We mentioned that Nodes are the fundamental building blocks of JavaFX and used a Label as our root node in the HelloWorld application.
+ *
+ *      i.  What are some of the other types of Nodes?
+ *          Label, Button, RadioButton, CheckBox, TextField, PasswordField, HyperLink, Slider, ProgressIndicator, ScrollBar, Menu, ToolTip
+ *
+ *      ii. How does JavaFX group them?
+ *          javafx.scene.control
+ *
+ * 2.   Nodes can be interacted with like Plain Old Java Objects (POJO).
+ *
+ *      i.  What properties of a Label can you change programmatically?
+ *          windows, x, y,
+ *      ii. Try changing the Label to have a font of Arial at size 50.
+ *
+ * 3.   You’ve learnt that a Stage can be thought of as a window.
+ *
+ *      i.  Can you have more than one Stage an application?
+ *      ii. Try creating another stage and showing it! What happens?
+ */
