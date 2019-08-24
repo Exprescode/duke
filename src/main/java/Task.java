@@ -1,8 +1,9 @@
 public class Task {
-    private String name;
+    private String desc;
     private boolean status;
-    public Task(String name) {
-        this.name = name;
+
+    public Task(String desc) {
+        this.desc = desc;
         this.status = false;
     }
 
@@ -10,11 +11,15 @@ public class Task {
         this.status = true;
     }
 
-    public String getName() {
-        return this.name;
+    public String getDesc() {
+        return this.desc;
     }
 
     public boolean getStatus() {
         return this.status;
+    }
+
+    public String toString() {
+        return ("[" + (status ? "✓" : "✗") + "] " + desc);
     }
 }
