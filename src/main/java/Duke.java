@@ -64,6 +64,13 @@ public class Duke {
                         print_console(format_error("The argument of done must be an entry number from list."));
                     }
                     break;
+                case "find":
+                    try{
+                        cmd_find(user_input_parts[1]);
+                    } catch (DukeEmptyException e) {
+                        print_console((format_error("Your list is empty. Please populate it first.")));
+                    }
+                    break;
                 case "todo":
                     try{
                         cmd_todo(user_input_parts[1]);
@@ -149,6 +156,26 @@ public class Duke {
         print_console(sb.toString());
     }
 
+    private static void cmd_done(String option) throws DukeEmptyException,DukeFormatException,DukeBoundException {
+        int index;
+        if(option.length() == 0){
+            throw new DukeEmptyException("Arguemnt cannot be empty!");
+        }
+        try {
+            index = Integer.parseInt(option);
+        } catch (Exception e) {
+            throw new DukeFormatException("Done argument is not numeric.");
+        }
+        if (index > 0 && index <= tasks.size()) {
+            Task curr_task = tasks.get(--index);
+            curr_task.setDone();
+            print_console("Nice! I've marked this task as done:\n " + curr_task.toString());
+            backup_tasks();
+        } else {
+            throw new DukeBoundException("Option is not within list options.");
+        }
+    }
+
     private static void cmd_delete(String option) throws DukeEmptyException,DukeFormatException,DukeBoundException {
         int index;
         if(option.length() == 0){
@@ -169,23 +196,25 @@ public class Duke {
         }
     }
 
-    private static void cmd_done(String option) throws DukeEmptyException,DukeFormatException,DukeBoundException {
-        int index;
-        if(option.length() == 0){
-            throw new DukeEmptyException("Arguemnt cannot be empty!");
+    private static void cmd_find(String search_str) throws DukeEmptyException {
+        if(tasks.size() < 1){
+            throw new DukeEmptyException("Task list is empty! Cannot list an empty list.");
         }
-        try {
-            index = Integer.parseInt(option);
-        } catch (Exception e) {
-            throw new DukeFormatException("Done argument is not numeric.");
+        Pattern pattern = Pattern.compile(".?" + search_str.replaceAll(" ", ".?") + ".?", Pattern.CASE_INSENSITIVE);
+        int counter = 0;
+        StringBuilder sb = new StringBuilder();
+        sb.append("Here are the matching tasks in your list:\n");
+        for (Task proc_task : tasks) {
+            if (pattern.matcher(proc_task.getDesc()).find()) {
+                counter++;
+                sb.append(counter + "." + proc_task.toString() + "\n");
+            }
         }
-        if (index > 0 && index <= tasks.size()) {
-            Task curr_task = tasks.get(--index);
-            curr_task.setDone();
-            print_console("Nice! I've marked this task as done:\n " + curr_task.toString());
-            backup_tasks();
+        sb.deleteCharAt(sb.length() - 1); //Remove extra newline.
+        if(counter > 0){
+            print_console(sb.toString());
         } else {
-            throw new DukeBoundException("Option is not within list options.");
+            print_console("I've search everywhere but there is not matching tasks.");
         }
     }
 
