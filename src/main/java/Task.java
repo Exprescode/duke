@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class Task implements Serializable {
+public abstract class Task implements Serializable {
     private String desc;
     private boolean status;
 

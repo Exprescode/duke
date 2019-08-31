@@ -1,12 +1,16 @@
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Deadline extends Task {
-    protected String by;
-    public Deadline(String desc, String by){
+    protected Calendar by;
+    public Deadline(String desc, Calendar by){
         super(desc);
         this.by = by;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMMM yyyy, hh:mm aaa");
+        return "[D]" + super.toString() + " (by: " + sdf.format(by.getTime()) + ")";
     }
 }
