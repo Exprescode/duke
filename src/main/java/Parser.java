@@ -8,6 +8,13 @@ import static java.util.Arrays.copyOf;
 
 public abstract class Parser {
 
+    /**
+     * Take in user input and create command object to be executed after.
+     * @param input User input from console.
+     * @return      Command object ready to process user task.
+     * @throws DukeFormatException  Incorrect command format from user.
+     * @throws DukeEmptyException   Missing mandatory command argument(s).
+     */
     public static Command parse(String input) throws DukeFormatException, DukeEmptyException {
         if(input.equals("bye")) {
             return new ExitCommand();
@@ -28,7 +35,7 @@ public abstract class Parser {
         switch(input_parts[0]){
             case "delete":
                 if(input_parts[1].length() < 1){
-                    throw new DukeEmptyException("Delete arguemnt cannot be empty!");
+                    throw new DukeEmptyException("Delete argument cannot be empty!");
                 }
                 try {
                     return new DeleteCommand(Integer.parseInt(input_parts[1]) - 1);
@@ -37,7 +44,7 @@ public abstract class Parser {
                 }
             case "done":
                 if(input_parts[1].length() < 1){
-                    throw new DukeEmptyException("Done arguemnt cannot be empty.");
+                    throw new DukeEmptyException("Done arguments cannot be empty.");
                 }
                 try {
                     return new DoneCommand(Integer.parseInt(input_parts[1]) - 1);

@@ -3,11 +3,20 @@ import java.util.ArrayList;
 
 public class Storage {
     private String path;
+
+    /**
+     * Storage class constructor init object variable.
+     * @param path Path of data file to be read.
+     */
     public Storage(String path){
         this.path = path;
     }
-    // FileOutputStream():FileNotFoundException - If the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
-    // ObjectOutputStream():IOException - If an I/O error occurs while writing stream header.
+
+    /**
+     * Write and save TaskList into a file.
+     * @param data  TaskList to be saved.
+     * @return  If successful, exit code 0 will be returned. Otherwise, negative integer will be returned.
+     */
     public int store(TaskList data) {
         FileOutputStream fos = null;
         try {
@@ -38,9 +47,13 @@ public class Storage {
         }
         return 0;
     }
-    // FileInputStream():FileNotFoundException - If the file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading.
-    // ObjectInputStream():IOException - If an I/O error occurs while reading stream header.
-    // ObjectInputStream.readObject():ClassNotFoundException - Class of a serialized object cannot be found.
+
+    /**
+     * Read saved TaskList file into Task ArrayList.
+     * @return  Serializable object to be initiated in TaskList.
+     * @throws ClassNotFoundException   Data in the object is not Task ArrayList.
+     * @throws IOException  Invalid path or no read permission or I/O operation is interrupted.
+     */
     public ArrayList<Task> load() throws ClassNotFoundException, IOException {
         FileInputStream fis = new FileInputStream(this.path);
         ObjectInputStream ois = new ObjectInputStream(fis);

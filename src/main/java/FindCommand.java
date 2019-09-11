@@ -1,9 +1,22 @@
 public class FindCommand extends Command {
     private String query;
+
+    /**
+     * FindCommand constructor init FindCommand obj & variables.
+     * @param query Task description search string.
+     */
     public FindCommand(String query){
         this.query = query;
     }
 
+
+    /**
+     * Find tasks with matching description to query string.
+     * @param tasks                 list of task required for command processing.
+     * @param ui                    Object interact with user console.
+     * @param storage               Object interact with data file.
+     * @throws DukeBoundException   Taskslist is empty.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws DukeBoundException {
         if(tasks.len() < 1){
@@ -17,6 +30,10 @@ public class FindCommand extends Command {
         }
     }
 
+    /**
+     * Proceed to exit program.
+     * @return Exit program if true.
+     */
     @Override
     public boolean isExit() {
         return false;
