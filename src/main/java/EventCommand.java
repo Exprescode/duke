@@ -2,8 +2,8 @@ import java.util.Calendar;
 
 public class EventCommand extends Command {
 
-    private String desc;
-    private Calendar start, end;
+    protected String desc;
+    protected Calendar start, end;
 
     /**
      * EventCommand constructor for event without end date time.
